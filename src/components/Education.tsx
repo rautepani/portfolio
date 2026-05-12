@@ -11,7 +11,7 @@ const education = [
   },
   {
     degree: 'Higher Secondary (Science)',
-    institution: 'Shree Amarsingh Secondary School (AHS)',
+    institution: 'Shree Amarsingh Secondary School',
     period: '2020 — 2022',
     status: 'completed',
     details: ['Science specialization', 'Math, Physics, Chemistry'],

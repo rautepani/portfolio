@@ -1,39 +1,11 @@
-import { Code2, Lock, Globe, Cpu } from 'lucide-react';
 import SectionHeader from './SectionHeader';
 import { PERSONAL_INFO } from '../constants';
-
-const highlights = [
-  {
-    icon: Globe,
-    label: '01',
-    title: 'Web Development',
-    desc: 'Building full-stack applications with React, Node.js, Django and modern tooling. Experienced in API design, database optimization, and responsive UI development.',
-  },
-  {
-    icon: Lock,
-    label: '02',
-    title: 'Cybersecurity',
-    desc: 'Exploring offensive and defensive security techniques, CTF competitions, and vulnerability research. Interested in web application security and penetration testing.',
-  },
-  {
-    icon: Code2,
-    label: '03',
-    title: 'Backend Engineering',
-    desc: 'Designing robust RESTful APIs with Node.js, Spring Boot, and Django. Focus on scalability, security, and clean code architecture.',
-  },
-  {
-    icon: Cpu,
-    label: '04',
-    title: 'Systems & Linux',
-    desc: 'Comfortable with Linux environments, shell scripting, and containerization with Docker. Experience in DevOps practices and system administration.',
-  },
-];
 
 const terminalLines = [
   { cmd: 'whoami', out: 'biswash_devkota' },
   { cmd: 'cat bio.txt', out: `${PERSONAL_INFO.bio}` },
   { cmd: 'echo $LOCATION', out: `${PERSONAL_INFO.location} 🏔` },
-  { cmd: 'echo $STATUS', out: 'Open to opportunities', highlight: true },
+  { cmd: 'echo $STATUS', out: 'Open to learning opportunities', highlight: true },
 ];
 
 export default function About() {
@@ -68,11 +40,11 @@ export default function About() {
       <div className="max-w-6xl mx-auto relative">
         <SectionHeader label="01" title="About Me" />
 
-        <div className="mt-16 grid lg:grid-cols-2 gap-12 items-start">
+        <div className="mt-16 flex justify-center">
 
-          {/* ── LEFT: Terminal ── */}
+          {/* ── Terminal ── */}
           <div
-            className="relative"
+            className="relative w-full max-w-2xl"
             style={{
               animation: 'slideUp 0.6s ease forwards',
               opacity: 0,
@@ -164,7 +136,7 @@ export default function About() {
             <div
               className="absolute -bottom-3 -right-3 text-[10px] tracking-widest px-3 py-1 rounded-full"
               style={{
-                background: 'rgba(52,211,153,0.08)',
+                background: 'rgba(43, 87, 71, 0.08)',
                 border: '1px solid rgba(52,211,153,0.15)',
                 color: 'rgba(52,211,153,0.5)',
                 fontFamily: 'monospace',
@@ -174,82 +146,6 @@ export default function About() {
             </div>
           </div>
 
-          {/* ── RIGHT: Highlights ── */}
-          <div className="space-y-3">
-            {highlights.map((item, idx) => {
-              const Icon = item.icon;
-              return (
-                <div
-                  key={item.title}
-                  className="group relative flex gap-5 rounded-xl p-5 overflow-hidden cursor-default"
-                  style={{
-                    background: 'rgba(255,255,255,0.018)',
-                    border: '1px solid rgba(255,255,255,0.05)',
-                    transition: 'border-color 0.3s ease, background 0.3s ease, transform 0.3s ease',
-                    animation: 'slideUp 0.5s ease forwards',
-                    opacity: 0,
-                    animationDelay: `${0.2 + idx * 0.08}s`,
-                  }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.borderColor = 'rgba(52,211,153,0.2)';
-                    e.currentTarget.style.background = 'rgba(52,211,153,0.04)';
-                    e.currentTarget.style.transform = 'translateX(4px)';
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)';
-                    e.currentTarget.style.background = 'rgba(255,255,255,0.018)';
-                    e.currentTarget.style.transform = 'translateX(0)';
-                  }}
-                >
-                  {/* Sweep gradient on hover via pseudo-element workaround */}
-                  <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-500"
-                    style={{ background: 'linear-gradient(90deg, rgba(52,211,153,0.04) 0%, transparent 60%)' }}
-                  />
-
-                  {/* Number label */}
-                  <span
-                    className="absolute top-4 right-5 text-[10px] tracking-[0.2em]"
-                    style={{
-                      color: 'rgba(255,255,255,0.08)',
-                      fontFamily: 'monospace',
-                      transition: 'color 0.3s',
-                    }}
-                  >
-                    {item.label}
-                  </span>
-
-                  {/* Icon */}
-                  <div
-                    className="flex-shrink-0 mt-0.5 w-9 h-9 rounded-lg flex items-center justify-center"
-                    style={{
-                      background: 'rgba(52,211,153,0.08)',
-                      border: '1px solid rgba(52,211,153,0.12)',
-                      transition: 'background 0.3s',
-                    }}
-                  >
-                    <Icon size={16} style={{ color: '#34d399' }} />
-                  </div>
-
-                  {/* Text */}
-                  <div className="relative">
-                    <h3
-                      className="font-semibold text-sm mb-1 tracking-tight"
-                      style={{ color: 'rgba(255,255,255,0.88)', fontFamily: '"DM Sans", system-ui, sans-serif' }}
-                    >
-                      {item.title}
-                    </h3>
-                    <p
-                      className="text-[13px] leading-relaxed"
-                      style={{ color: 'rgba(255,255,255,0.33)', transition: 'color 0.3s' }}
-                    >
-                      {item.desc}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
         </div>
       </div>
 

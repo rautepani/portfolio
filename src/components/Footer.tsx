@@ -48,8 +48,8 @@ export default function Footer() {
 
             <ul className="space-y-2 text-sm">
               {[
-                { name: 'GitHub', url: 'https://github.com/biswashniyam' },
-                { name: 'LinkedIn', url: 'https://linkedin.com/in/biswash-devkota-31814026a/' },
+                { name: 'GitHub', url: 'https://github.com/rautepani' },
+                { name: 'LinkedIn', url: 'https://www.linkedin.com/in/biswash/' },
                 { name: 'Twitter', url: 'https://x.com/Biswash_dev369' },
               ].map((social) => (
                 <li key={social.name}>
@@ -73,14 +73,7 @@ export default function Footer() {
 
         {/* BOTTOM SECTION */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500">
-
-        
-
-          <div className="flex items-center gap-2 text-gray-400">
-            <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-            <span>Available for internships & opportunities</span>
-          </div>
-
+          <div>© {new Date().getFullYear()} biswash.dev</div>
         </div>
       </div>
     </footer>

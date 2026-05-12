@@ -34,17 +34,15 @@ export const ANIMATIONS = {
 
 // Social links
 export const SOCIAL_LINKS = {
-  github: 'https://github.com/biswashniyam',
-  linkedin: 'https://linkedin.com/in/biswash-devkota-31814026a/',
+  github: 'https://github.com/rautepani',
+  linkedin: 'https://www.linkedin.com/in/biswash/',
   twitter: 'https://x.com/Biswash_dev369',
-  email: 'biswash.devkota@example.com', // Update with real email
+  email: 'biswashdevkota2023@example.com',
 };
-
 // Personal info
 export const PERSONAL_INFO = {
   name: 'Biswash Devkota',
   location: 'Nepal',
-  bio: 'Software Engineering undergrad at Pokhara University. Building secure systems, exploring vulnerabilities, and crafting clean web applications.',
-  shortBio: 'Security-focused software engineer & web developer',
-  email: 'biswash.devkota@example.com',
+  bio: 'I am a Software Engineering undergraduate at Pokhara University with interests in Software Development, Cybersecurity, DevOps, and Cloud Computing.',
+  email: 'biswashdevkota2023@example.com',
 };

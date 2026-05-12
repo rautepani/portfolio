@@ -3,11 +3,7 @@ import { Github, Linkedin, Twitter, ChevronDown } from 'lucide-react';
 import { SOCIAL_LINKS, PERSONAL_INFO } from '../constants';
 
 const roles = [
-  'Information Security Apprentice',
   'Software Engineering Student',
-  'Web Developer',
-  'CTF Player',
-  'Open Source Enthusiast',
 ];
 
 export default function Hero() {
@@ -59,11 +55,7 @@ export default function Hero() {
 
       <div className="relative z-10 max-w-3xl w-full text-center">
 
-        {/* status pill */}
-        <div className="inline-flex items-center gap-2 bg-gray-900 border border-gray-800 rounded-full px-4 py-1.5 mb-8 text-sm">
-          <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-          <span className="text-gray-400">Available for opportunities</span>
-        </div>
+     
 
         {/* NAME (no logo above anymore) */}
         <h1 className="text-5xl md:text-7xl font-bold mb-4 tracking-tight">
