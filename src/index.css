@@ -1248,7 +1248,7 @@ section {
 
 .skills-panel-num {
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: bold;
   color: var(--green);
   background: rgba(67, 216, 138, 0.06);
@@ -1259,7 +1259,7 @@ section {
 
 .skills-panel-title {
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
   color: var(--text-strong);
   letter-spacing: 0.02em;
@@ -1270,7 +1270,7 @@ section {
   align-items: center;
   gap: 6px;
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12.5px;
   font-weight: bold;
   color: var(--text-dim);
   text-transform: uppercase;
@@ -1312,7 +1312,7 @@ section {
 
 .skill-pill-label {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 13px;
   color: var(--text);
   white-space: nowrap;
 }
