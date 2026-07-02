@@ -106,6 +106,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--sans);
+  font-size: 18px;
   line-height: 1.6;
   overflow-x: hidden;
   background-image:
@@ -223,7 +224,7 @@ a {
   box-shadow: 0 10px 34px rgba(0, 0, 0, 0.4), 0 1px 0 rgba(255, 255, 255, 0.03) inset;
   font-family: var(--mono);
   font-weight: 700;
-  font-size: 13px;
+  font-size: 17px;
   color: var(--green);
   letter-spacing: -0.01em;
   transition: border-color .2s, color .2s;
@@ -270,7 +271,7 @@ a {
   align-items: center;
   gap: 8px;
   font-family: var(--mono);
-  font-size: 16px;
+  font-size: 19px;
   padding-left: 4px;
 }
 
@@ -337,7 +338,7 @@ a {
 
 .cv-btn {
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 16px;
   border: 1px solid var(--border-bright);
   padding: 6px 14px;
   border-radius: 999px;
@@ -1096,7 +1097,7 @@ section {
 
 .sec-label {
   font-family: var(--mono);
-  font-size: 12.5px;
+  font-size: 15px;
   color: var(--green);
   display: flex;
   align-items: center;
@@ -1638,7 +1639,7 @@ section {
 
 .ssh-log {
   font-family: var(--mono);
-  font-size: 12.5px;
+  font-size: 15px;
   color: var(--text-dim);
   line-height: 1.9;
   max-height: 120px;
@@ -1685,7 +1686,7 @@ section {
 .contact-field label {
   display: block;
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 14px;
   color: var(--text-dim);
   text-transform: uppercase;
   letter-spacing: .06em;
@@ -1705,7 +1706,7 @@ section {
   border-radius: 5px;
   padding: 11px 13px;
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: 15px;
   color: var(--text);
   outline: none;
   transition: border-color .2s;
@@ -1862,7 +1863,7 @@ section {
   border-radius: 50%;
 }
 .term-title {
-  font-size: 11.5px;
+  font-size: 14px;
   color: var(--text-dim);
 }
 .term-body {
@@ -1870,7 +1871,7 @@ section {
   min-height: 280px;
   max-height: 380px;
   overflow-y: auto;
-  font-size: 12.5px;
+  font-size: 15px;
   line-height: 1.85;
   color: #dfe6e3;
   scrollbar-width: none;
@@ -1910,7 +1911,7 @@ section {
 }
 .term-prompt {
   color: var(--green);
-  font-size: 13px;
+  font-size: 15px;
 }
 .term-input-wrap {
   position: relative;
@@ -1924,7 +1925,7 @@ section {
   border: none;
   outline: none;
   color: #dfe6e3;
-  font-size: 13px;
+  font-size: 15px;
   caret-color: transparent;
 }
 .term-input::placeholder {
@@ -1937,7 +1938,7 @@ section {
   visibility: hidden;
   white-space: pre;
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: 15px;
 }
 .term-block-cursor {
   position: absolute;
