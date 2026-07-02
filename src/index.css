@@ -1134,12 +1134,14 @@ section {
 /* ===== about ===== */
 .about-grid {
   display: block;
-  max-width: 760px;
+  width: 65%;
+  max-width: 960px;
 }
 
 @media (max-width: 900px) {
   .about-grid {
     grid-template-columns: 1fr;
+    max-width: 100%;
   }
 }
 
@@ -1223,8 +1225,20 @@ section {
 /* ===== Numbered Panel Cards for Skills ===== */
 .skills-panels-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .skills-panels-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 580px) {
+  .skills-panels-container {
+    grid-template-columns: 1fr;
+  }
 }
 
 .skills-panel-card {
@@ -1254,18 +1268,18 @@ section {
 
 .skills-panel-num {
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: bold;
   color: var(--green);
   background: rgba(67, 216, 138, 0.06);
-  padding: 2px 6px;
+  padding: 3px 8px;
   border-radius: 4px;
   border: 1px solid var(--green-dim);
 }
 
 .skills-panel-title {
   font-family: var(--mono);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
   color: var(--text-strong);
   letter-spacing: 0.02em;
@@ -1296,8 +1310,8 @@ section {
 .skill-pill-item {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
+  gap: 8px;
+  padding: 9px 16px;
   background: var(--bg);
   border: 1px solid var(--border-bright);
   border-radius: 9999px;
@@ -1318,13 +1332,14 @@ section {
 
 .skill-pill-label {
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: 15px;
   color: var(--text);
   white-space: nowrap;
 }
 
+/* Soft skills — normal card in the grid, not spanning full row */
 .skills-panel-fullwidth {
-  grid-column: 1 / -1;
+  grid-column: auto;
 }
 
 /* ===== My Arsenal icon grid ===== */
@@ -1372,7 +1387,7 @@ section {
   border: 1px solid var(--border);
   border-radius: 6px;
   font-family: var(--mono);
-  font-size: 13.5px;
+  font-size: 15px;
   overflow: hidden;
 }
 
@@ -1409,7 +1424,7 @@ section {
 }
 
 .pkg-row .status {
-  font-size: 11px;
+  font-size: 14px;
   padding: 3px 8px;
   border-radius: 3px;
   text-align: center;
@@ -1492,7 +1507,7 @@ section {
 .proj-name {
   font-family: var(--mono);
   font-weight: 700;
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   color: var(--text-strong);
 }
 
@@ -1503,7 +1518,7 @@ section {
 
 .sev {
   font-family: var(--mono);
-  font-size: 10.5px;
+  font-size: 13px;
   padding: 3px 9px;
   border-radius: 3px;
   letter-spacing: .05em;
@@ -1526,7 +1541,7 @@ section {
 
 .proj-desc {
   color: var(--text-muted);
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   margin-top: 12px;
   max-width: 640px;
 }
@@ -1540,10 +1555,10 @@ section {
 
 .stack-pill {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 14px;
   color: var(--text-dim);
   border: 1px solid var(--border-bright);
-  padding: 3px 9px;
+  padding: 4px 11px;
   border-radius: 20px;
 }
 
@@ -1552,7 +1567,7 @@ section {
   display: flex;
   gap: 18px;
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .proj-links a {
@@ -1604,26 +1619,26 @@ section {
 
 .commit .chash {
   font-family: var(--mono);
-  font-size: 11.5px;
+  font-size: 14px;
   color: var(--text-dim);
 }
 
 .commit .ctitle {
   font-family: var(--mono);
   font-weight: 700;
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   color: var(--text-strong);
   margin: 5px 0 6px;
 }
 
 .commit .cbody {
   color: var(--text-muted);
-  font-size: 0.94rem;
+  font-size: 1.05rem;
 }
 
 .commit .cmeta {
   font-family: var(--mono);
-  font-size: 11.5px;
+  font-size: 14px;
   color: var(--green-dim);
   margin-top: 8px;
 }
@@ -1869,8 +1884,8 @@ section {
 }
 .term-body {
   padding: 16px 18px;
-  min-height: 280px;
-  max-height: 380px;
+  min-height: 344px;
+  max-height: 444px;
   overflow-y: auto;
   font-size: 15px;
   line-height: 1.85;

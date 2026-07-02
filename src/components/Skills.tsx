@@ -20,8 +20,8 @@ const SimpleIcon = ({ slug, color }: { slug: string; color: string }) => {
     <img
       src={`https://cdn.simpleicons.org/${slug}/${color}`}
       alt={`${slug} icon`}
-      width={14}
-      height={14}
+      width={18}
+      height={18}
       style={{ display: 'block' }}
     />
   );
@@ -34,23 +34,23 @@ const groups = [
       { icon: <SimpleIcon slug="python" color="3776AB" />, label: 'Python' },
       { icon: <SimpleIcon slug="javascript" color="F7DF1E" />, label: 'JavaScript' },
       { icon: <SimpleIcon slug="rust" color="CE412B" />, label: 'Rust' },
-      { icon: <Terminal className="text-green-500" size={14} />, label: 'Bash' },
+      { icon: <Terminal className="text-green-500" size={18} />, label: 'Bash' },
     ],
   },
   {
     title: 'Security & Testing',
     tools: [
-      { icon: <Search className="text-cyan-500" size={14} />, label: 'nmap' },
+      { icon: <Search className="text-cyan-500" size={18} />, label: 'nmap' },
       { icon: <SimpleIcon slug="wireshark" color="1679A7" />, label: 'Wireshark' },
-      { icon: <Shield className="text-red-500" size={14} />, label: 'Burp Suite' },
-      { icon: <Database className="text-green-500" size={14} />, label: 'API Testing' },
+      { icon: <Shield className="text-red-500" size={18} />, label: 'Burp Suite' },
+      { icon: <Database className="text-green-500" size={18} />, label: 'API Testing' },
     ],
   },
   {
     title: 'Cloud & Data',
     tools: [
-      { icon: <Cloud className="text-orange-500" size={14} />, label: 'AWS EC2' },
-      { icon: <Cloud className="text-cyan-500" size={14} />, label: 'AWS S3' },
+      { icon: <Cloud className="text-orange-500" size={18} />, label: 'AWS EC2' },
+      { icon: <Cloud className="text-cyan-500" size={18} />, label: 'AWS S3' },
       { icon: <SimpleIcon slug="postgresql" color="4169E1" />, label: 'PostgreSQL' },
     ],
   },
@@ -68,11 +68,11 @@ const groups = [
     tools: [
       { icon: <SimpleIcon slug="linux" color="FCC624" />, label: 'Linux' },
       { icon: <SimpleIcon slug="git" color="F05032" />, label: 'Git' },
-      { icon: <Layers className="text-blue-400" size={14} />, label: 'Virtualization' },
+      { icon: <Layers className="text-blue-400" size={18} />, label: 'Virtualization' },
       { icon: <SimpleIcon slug="docker" color="2496ED" />, label: 'Docker' },
       { icon: <SimpleIcon slug="kubernetes" color="326CE5" />, label: 'Kubernetes' },
-      { icon: <Globe className="text-green-600" size={14} />, label: 'CI/CD' },
-      { icon: <Network className="text-teal-500" size={14} />, label: 'Packet Tracer' },
+      { icon: <Globe className="text-green-600" size={18} />, label: 'CI/CD' },
+      { icon: <Network className="text-teal-500" size={18} />, label: 'Packet Tracer' },
     ],
   },
 ];
@@ -80,10 +80,10 @@ const groups = [
 const softSkillsGroup = {
   title: 'Soft Skills',
   tools: [
-    { icon: <Clock className="text-pink-500" size={14} />, label: 'Time Management' },
-    { icon: <Users className="text-blue-500" size={14} />, label: 'Teamwork' },
-    { icon: <FileText className="text-yellow-500" size={14} />, label: 'Documentation' },
-    { icon: <Edit3 className="text-green-500" size={14} />, label: 'Report Writing' },
+    { icon: <Clock className="text-pink-500" size={18} />, label: 'Time Management' },
+    { icon: <Users className="text-blue-500" size={18} />, label: 'Teamwork' },
+    { icon: <FileText className="text-yellow-500" size={18} />, label: 'Documentation' },
+    { icon: <Edit3 className="text-green-500" size={18} />, label: 'Report Writing' },
   ],
 };
 
