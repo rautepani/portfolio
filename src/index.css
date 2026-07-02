@@ -5,9 +5,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Space+Grotesk:wght@300..700&display=swap');
 
 :root {
-  --font-heading: "Comic Sans MS", "Comic Sans", cursive;
-  --font-body: "Comic Sans MS", "Comic Sans", cursive;
-  --font-mono: "Comic Sans MS", "Comic Sans", cursive;
+  --font-heading: 'JetBrains Mono', monospace;
+  --font-body: "Comic Sans MS", "Comic Sans", cursive, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
   --bg: #0a0e0e;
   --bg-elevated: #0e1413;
   --bg-card: #101715;
@@ -31,7 +31,7 @@
   --row-hover: #121b19;
   --code-bg: #050807;
   --mono: 'JetBrains Mono', monospace;
-  --sans: 'IBM Plex Sans', sans-serif;
+  --sans: "Comic Sans MS", "Comic Sans", cursive, sans-serif;
 }
 
 body {
@@ -112,6 +112,10 @@ body {
     linear-gradient(var(--grid-line) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
   background-size: 42px 42px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
 }
 
 @media (hover:hover) and (pointer:fine) {
