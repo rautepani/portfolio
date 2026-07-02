@@ -1,8 +1,13 @@
-/** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        fraunces: ['"Comic Sans MS"', '"Comic Sans"', 'cursive'],
+        spaceGrotesk: ['"Comic Sans MS"', '"Comic Sans"', 'cursive'],
+        jetbrainsMono: ['"Comic Sans MS"', '"Comic Sans"', 'cursive'],
+      },
+    },
   },
   plugins: [],
 };

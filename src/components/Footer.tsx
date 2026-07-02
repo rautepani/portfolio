@@ -1,81 +1,25 @@
-import { Terminal, ExternalLink } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 export default function Footer() {
-  
+  const [time, setTime] = useState('--:--:--');
+
+  useEffect(() => {
+    const tick = () => {
+      const d = new Date();
+      setTime(d.toLocaleTimeString('en-GB'));
+    };
+    tick();
+    const interval = setInterval(tick, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <footer className="border-t border-gray-800 bg-[#0a0a0a] py-14 px-6">
-      <div className="max-w-5xl mx-auto">
-
-        {/* TOP SECTION */}
-        <div className="grid md:grid-cols-3 gap-10 mb-10">
-
-          {/* BRAND */}
-          <div>
-            <div className="flex items-center gap-2 text-emerald-400 font-mono text-sm mb-3">
-              <Terminal size={16} />
-              <span className="font-bold tracking-wide">biswash.dev</span>
-            </div>
-
-            <p className="text-gray-400 text-sm leading-relaxed">
-              Software engineer building modern web applications and exploring cybersecurity,
-              with a focus on clean systems and practical engineering.
-            </p>
-          </div>
-
-          {/* QUICK LINKS */}
-          <div>
-            <h4 className="text-white font-semibold text-sm mb-4">Quick Links</h4>
-
-            <ul className="space-y-2 text-sm">
-              {['About', 'Projects', 'Skills', 'Contact'].map((link) => (
-                <li key={link}>
-                  <a
-                    href={`#${link.toLowerCase()}`}
-                    className="text-gray-400 hover:text-emerald-400 transition-colors inline-flex items-center gap-2"
-                  >
-                    <span className="text-emerald-500">→</span>
-                    {link}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* SOCIAL */}
-          <div>
-            <h4 className="text-white font-semibold text-sm mb-4">Connect</h4>
-
-            <ul className="space-y-2 text-sm">
-              {[
-                { name: 'GitHub', url: 'https://github.com/rautepani' },
-                { name: 'LinkedIn', url: 'https://www.linkedin.com/in/biswash/' },
-                { name: 'Twitter', url: 'https://x.com/Biswash_dev369' },
-              ].map((social) => (
-                <li key={social.name}>
-                  <a
-                    href={social.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-gray-400 hover:text-emerald-400 transition-colors inline-flex items-center gap-2"
-                  >
-                    <ExternalLink size={12} />
-                    {social.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {/* DIVIDER */}
-        <div className="h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent mb-8" />
-
-        {/* BOTTOM SECTION */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500">
-          <div>© {new Date().getFullYear()} biswash.dev</div>
-        </div>
-      </div>
-    </footer>
+    <div className="statusbar">
+      <span className="live">connection secure</span>
+      <span>lat: 27.7°N</span>
+      <span>build: v2.0.0</span>
+      <span className="spacer"></span>
+      <span id="clock">{time}</span>
+    </div>
   );
 }

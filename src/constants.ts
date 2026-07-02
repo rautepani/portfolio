@@ -35,14 +35,14 @@ export const ANIMATIONS = {
 // Social links
 export const SOCIAL_LINKS = {
   github: 'https://github.com/rautepani',
-  linkedin: 'https://www.linkedin.com/in/biswash/',
-  twitter: 'https://x.com/Biswash_dev369',
-  email: 'biswashdevkota2023@example.com',
+  linkedin: 'https://www.linkedin.com/in/biswash',
+  twitter: 'https://twitter.com',
+  email: 'biswashdevkota2024@gmail.com',
 };
 // Personal info
 export const PERSONAL_INFO = {
   name: 'Biswash Devkota',
   location: 'Nepal',
   bio: 'I am a Software Engineering undergraduate at Pokhara University with interests in Software Development, Cybersecurity, DevOps, and Cloud Computing.',
-  email: 'biswashdevkota2023@example.com',
+  email: 'biswashdevkota2024@gmail.com',
 };

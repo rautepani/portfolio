@@ -1,175 +1,216 @@
-import SectionHeader from './SectionHeader';
-import { PERSONAL_INFO } from '../constants';
+import { useState, useRef, useEffect } from 'react';
 
-const terminalLines = [
-  { cmd: 'whoami', out: 'biswash_devkota' },
-  { cmd: 'cat bio.txt', out: `${PERSONAL_INFO.bio}` },
-  { cmd: 'echo $LOCATION', out: `${PERSONAL_INFO.location} 🏔` },
-  { cmd: 'echo $STATUS', out: 'Open to learning opportunities', highlight: true },
+const HELP_HINT = "Type 'help' for a list of available commands.";
+
+const QUICK_COMMANDS = [
+  { label: 'whoami', cmd: 'whoami' },
+  { label: 'ls interests/', cmd: 'ls interests/' },
+  { label: 'sudo hire-me', cmd: 'sudo hire-me' },
+  { label: 'help', cmd: 'help' },
 ];
 
+
+
 export default function About() {
+  const [termLines, setTermLines] = useState<
+    Array<{ text: string; type?: 'echo' | 'err' | 'default' }>
+  >([{ text: HELP_HINT, type: 'default' }]);
+  const [inputValue, setInputValue] = useState('');
+  const [cmdHistory, setCmdHistory] = useState<string[]>([]);
+  const [historyIdx, setHistoryIdx] = useState(-1);
+  const termBodyRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const commands: Record<string, string> = {
+    help: 'Available commands: whoami, pwd, ls, ls interests/, sudo hire-me, clear',
+    whoami: 'Biswash Devkota',
+    pwd: '/home/biswash/about',
+    ls: 'about.txt  interests/',
+    'ls interests/': 'machine-learning/  cybersecurity/  automation/',
+    'sudo hire-me': '[sudo] permission granted.\nredirecting to #contact ...',
+  };
+
+  useEffect(() => {
+    if (termBodyRef.current) {
+      termBodyRef.current.scrollTop = termBodyRef.current.scrollHeight;
+    }
+  }, [termLines]);
+
+  const runCommand = (cmd: string) => {
+    const newCmdHistory = [...cmdHistory, cmd];
+    setCmdHistory(newCmdHistory);
+    setHistoryIdx(newCmdHistory.length);
+
+    const echoLine = { text: cmd, type: 'echo' as const };
+
+    if (cmd === 'clear') {
+      setTermLines([{ text: HELP_HINT, type: 'default' }]);
+      setInputValue('');
+      return;
+    }
+
+    if (cmd === 'sudo hire-me') {
+      setTermLines((prev) => [...prev, echoLine, { text: commands[cmd], type: 'default' }]);
+      setInputValue('');
+      // Dispatch custom event to trigger contact sequence reset
+      window.dispatchEvent(new Event('resetContact'));
+      setTimeout(() => {
+        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+      }, 800);
+      return;
+    }
+
+    if (commands[cmd]) {
+      setTermLines((prev) => [...prev, echoLine, { text: commands[cmd], type: 'default' }]);
+    } else {
+      setTermLines((prev) => [
+        ...prev,
+        echoLine,
+        { text: `bash: command not found: ${cmd}. Type "help" for a list of commands.`, type: 'err' },
+      ]);
+    }
+    setInputValue('');
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const cmd = inputValue.trim();
+    if (!cmd) return;
+    runCommand(cmd);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const nextIdx = historyIdx - 1;
+      if (nextIdx >= 0) {
+        setHistoryIdx(nextIdx);
+        setInputValue(cmdHistory[nextIdx]);
+      }
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      const nextIdx = historyIdx + 1;
+      if (nextIdx < cmdHistory.length) {
+        setHistoryIdx(nextIdx);
+        setInputValue(cmdHistory[nextIdx]);
+      } else {
+        setHistoryIdx(cmdHistory.length);
+        setInputValue('');
+      }
+    }
+  };
+
   return (
-    <section
-      id="about"
-      className="relative py-32 px-6 overflow-hidden"
-      style={{ background: '#080808' }}
-    >
-      {/* Noise texture overlay */}
-      <div
-        className="absolute inset-0 opacity-[0.025] pointer-events-none"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-          backgroundSize: '200px',
-        }}
-      />
+    <section id="about">
+      <h2 className="sec-title">01. About</h2>
 
-      {/* Radial glow top-left */}
-      <div
-        className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full pointer-events-none"
-        style={{
-          background: 'radial-gradient(circle, rgba(52,211,153,0.07) 0%, transparent 70%)',
-        }}
-      />
-
-      {/* Top border line */}
-      <div className="absolute top-0 left-0 w-full h-px"
-        style={{ background: 'linear-gradient(to right, transparent, rgba(52,211,153,0.3), transparent)' }}
-      />
-
-      <div className="max-w-6xl mx-auto relative">
-        <SectionHeader label="01" title="About Me" />
-
-        <div className="mt-16 flex justify-center">
-
-          {/* ── Terminal ── */}
-          <div
-            className="relative w-full max-w-2xl"
-            style={{
-              animation: 'slideUp 0.6s ease forwards',
-              opacity: 0,
-              animationDelay: '0.1s',
-            }}
-          >
-            {/* Vertical accent line */}
-            <div
-              className="absolute -left-5 top-6 bottom-6 w-px"
-              style={{ background: 'linear-gradient(to bottom, transparent, rgba(52,211,153,0.4), transparent)' }}
-            />
-
-            <div
-              className="rounded-2xl overflow-hidden"
-              style={{
-                background: 'linear-gradient(160deg, #111215 0%, #0d0e10 100%)',
-                border: '1px solid rgba(255,255,255,0.055)',
-                boxShadow: '0 0 0 1px rgba(52,211,153,0.04), 0 24px 48px rgba(0,0,0,0.5)',
-              }}
-            >
-              {/* Title bar */}
-              <div
-                className="flex items-center gap-2 px-5 py-3.5"
-                style={{
-                  borderBottom: '1px solid rgba(255,255,255,0.05)',
-                  background: 'rgba(255,255,255,0.015)',
-                }}
-              >
-                <span className="w-3 h-3 rounded-full" style={{ background: '#ff5f57' }} />
-                <span className="w-3 h-3 rounded-full" style={{ background: '#febc2e' }} />
-                <span className="w-3 h-3 rounded-full" style={{ background: '#28c840' }} />
-                <span
-                  className="ml-auto text-[10px] tracking-[0.2em] uppercase"
-                  style={{ color: 'rgba(255,255,255,0.15)', fontFamily: '"JetBrains Mono", monospace' }}
-                >
-                  whoami.sh
-                </span>
-              </div>
-
-              {/* Terminal body */}
-              <div
-                className="p-7 space-y-6"
-                style={{ fontFamily: '"JetBrains Mono", "Fira Code", monospace', fontSize: '13px', lineHeight: '1.7' }}
-              >
-                {terminalLines.map((line, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      animation: 'fadeIn 0.4s ease forwards',
-                      opacity: 0,
-                      animationDelay: `${0.3 + i * 0.12}s`,
-                    }}
-                  >
-                    {/* Command line */}
-                    <div className="flex items-center gap-2">
-                      <span style={{ color: '#34d399' }}>❯</span>
-                      <span style={{ color: '#7dd3fc' }}>{line.cmd}</span>
-                    </div>
-                    {/* Output */}
-                    <p
-                      className="pl-5 mt-1 whitespace-pre-line"
-                      style={{
-                        color: line.highlight ? '#34d399' : 'rgba(255,255,255,0.38)',
-                        textShadow: line.highlight ? '0 0 12px rgba(52,211,153,0.4)' : 'none',
-                      }}
-                    >
-                      {line.out}
-                    </p>
-                  </div>
-                ))}
-
-                {/* Blinking cursor */}
-                <div className="flex items-center gap-2">
-                  <span style={{ color: '#34d399' }}>❯</span>
-                  <span
-                    style={{
-                      display: 'inline-block',
-                      width: '8px',
-                      height: '15px',
-                      background: 'rgba(52,211,153,0.7)',
-                      animation: 'blink 1s step-end infinite',
-                    }}
-                  />
-                </div>
-              </div>
+      <div className="about-grid reveal">
+        {/* ── Left: Interactive Terminal ── */}
+        <div className="term-card" onClick={() => inputRef.current?.focus()}>
+          <div className="term-head">
+            <div className="dots-mini">
+              <span style={{ background: '#ef5b5b' }} />
+              <span style={{ background: '#f2a93b' }} />
+              <span style={{ background: '#43d88a' }} />
             </div>
-
-            {/* Decorative corner tag */}
-            <div
-              className="absolute -bottom-3 -right-3 text-[10px] tracking-widest px-3 py-1 rounded-full"
-              style={{
-                background: 'rgba(43, 87, 71, 0.08)',
-                border: '1px solid rgba(52,211,153,0.15)',
-                color: 'rgba(52,211,153,0.5)',
-                fontFamily: 'monospace',
-              }}
-            >
-              v2.0
-            </div>
+            <span className="term-title mono">visitor@nityaniyam: ~/about</span>
           </div>
 
+          <div className="term-body mono" ref={termBodyRef}>
+            {/* Static bio — never cleared */}
+            <div className="term-line echo">cat about.txt</div>
+            <div className="term-line" style={{ textAlign: 'justify', marginBottom: '14px' }}>
+              I'm Biswash Devkota, a software engineer. I like solving problems with software,
+              and I've been building projects that combine machine learning and cybersecurity.
+              I'm always curious about how software works under the hood and how systems can be
+              broken. I dedicate my time to exploring new tools, automating workflows, and
+              building software that's secure, efficient, and scalable.
+            </div>
+            <div className="term-line" style={{ textAlign: 'justify', marginBottom: '14px' }}>
+              I'm a passionate cybersecurity enthusiast with a strong pull toward offensive security.
+            </div>
+
+            {/* Dynamic outputs */}
+            {termLines.map((line, idx) => {
+              if (line.type === 'echo') {
+                return (
+                  <div key={idx} className="term-line echo">
+                    {line.text}
+                  </div>
+                );
+              }
+              return (
+                <div
+                  key={idx}
+                  className={`term-line${line.type === 'err' ? ' term-err' : ''}`}
+                  style={{ whiteSpace: 'pre-wrap' }}
+                >
+                  {line.text}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Input row */}
+          <form onSubmit={handleSubmit} className="term-input-row">
+            <span className="term-prompt mono">$</span>
+            <div className="term-input-wrap">
+              <input
+                ref={inputRef}
+                id="termInput"
+                className="term-input mono"
+                type="text"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyDown={handleKeyDown}
+                autoComplete="off"
+                spellCheck={false}
+                placeholder="type a command..."
+              />
+              <span className="term-measure mono">{inputValue}</span>
+              <span
+                className="term-block-cursor"
+                style={{ left: `${Math.min(300, inputValue.length * 8 + 4)}px` }}
+              />
+            </div>
+          </form>
+
+          {/* Quick-command pills */}
+          <div style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '6px',
+            padding: '0 18px 14px',
+          }}>
+            {QUICK_COMMANDS.map(({ label, cmd }) => (
+              <button
+                key={cmd}
+                type="button"
+                onClick={(e) => { e.stopPropagation(); runCommand(cmd); }}
+                style={{
+                  fontFamily: 'var(--mono)',
+                  fontSize: '11px',
+                  color: 'var(--green)',
+                  border: '1px solid var(--green-dim)',
+                  borderRadius: '3px',
+                  background: 'rgba(67,216,138,0.06)',
+                  padding: '3px 9px',
+                  cursor: 'pointer',
+                  transition: 'all .15s',
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.background = 'rgba(67,216,138,0.14)';
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.background = 'rgba(67,216,138,0.06)';
+                }}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
-
-      {/* Bottom border line */}
-      <div
-        className="absolute bottom-0 left-0 w-full h-px"
-        style={{ background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.05), transparent)' }}
-      />
-
-      {/* Keyframes injected inline */}
-      <style>{`
-        @keyframes slideUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to   { opacity: 1; }
-        }
-        @keyframes blink {
-          0%, 100% { opacity: 1; }
-          50%       { opacity: 0; }
-        }
-      `}</style>
     </section>
   );
 }
