@@ -223,10 +223,11 @@ a {
   box-shadow: 0 10px 34px rgba(0, 0, 0, 0.4), 0 1px 0 rgba(255, 255, 255, 0.03) inset;
   font-family: var(--mono);
   font-weight: 700;
-  font-size: 16px;
+  font-size: 17.5px;
   color: var(--green);
   letter-spacing: -0.01em;
   transition: border-color .2s, color .2s;
+  line-height: 1.2;
 }
 
 .brand-pill .path-prefix {
@@ -775,7 +776,7 @@ a {
   background: transparent;
   box-shadow: none;
   border-radius: 0;
-  width: 380px;
+  width: 450px;
   max-width: 100%;
   position: relative;
   /* remove pseudo-element brackets */
@@ -979,7 +980,7 @@ a {
 
 .prompt-line {
   font-family: var(--mono);
-  font-size: 1.05rem;
+  font-size: 1.3rem;
   color: var(--text-muted);
   margin-top: 18px;
   display: flex;
@@ -1000,6 +1001,7 @@ a {
   vertical-align: text-bottom;
 }
 
+
 @keyframes blink {
   50% {
     opacity: 0;
@@ -1010,7 +1012,7 @@ a {
   max-width: 560px;
   margin-top: 26px;
   color: var(--text-muted);
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 
 .hero-desc b {
