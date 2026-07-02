@@ -106,7 +106,6 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--sans);
-  font-size: 18px;
   line-height: 1.6;
   overflow-x: hidden;
   background-image:
@@ -224,7 +223,7 @@ a {
   box-shadow: 0 10px 34px rgba(0, 0, 0, 0.4), 0 1px 0 rgba(255, 255, 255, 0.03) inset;
   font-family: var(--mono);
   font-weight: 700;
-  font-size: 17px;
+  font-size: 16px;
   color: var(--green);
   letter-spacing: -0.01em;
   transition: border-color .2s, color .2s;
@@ -271,7 +270,7 @@ a {
   align-items: center;
   gap: 8px;
   font-family: var(--mono);
-  font-size: 19px;
+  font-size: 16px;
   padding-left: 4px;
 }
 
