@@ -268,17 +268,18 @@ a {
 
 @media (max-width: 900px) {
   .titlebar {
-    left: auto;
-    right: 68px;
-    transform: none;
+    left: calc(50% + 59px);
+    right: auto;
+    transform: translateX(-50%);
     max-width: none;
-    padding: 8px 10px;
+    padding: 6px 8px;
   }
 }
 
 @media (max-width: 640px) {
   .titlebar {
-    right: 60px;
+    left: calc(50% + 40px);
+    padding: 5px 7px;
   }
 }
 
@@ -875,6 +876,18 @@ a {
   /* remove pseudo-element brackets */
 }
 
+@media (max-width: 640px) {
+  .hero-avatar-frame {
+    width: 300px;
+  }
+}
+
+@media (max-width: 400px) {
+  .hero-avatar-frame {
+    width: 250px;
+  }
+}
+
 /* Remove corner brackets entirely */
 .hero-avatar-frame::before,
 .hero-avatar-frame::after {
@@ -1036,6 +1049,20 @@ a {
   line-height: 0.98;
   letter-spacing: -0.02em;
   color: var(--text-strong);
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+@media (max-width: 640px) {
+  .hero h1 {
+    font-size: clamp(1.9rem, 10vw, 3rem);
+  }
+}
+
+@media (max-width: 400px) {
+  .hero h1 {
+    font-size: clamp(1.7rem, 11vw, 2.5rem);
+  }
 }
 
 .hero h1 .accent {
@@ -1081,6 +1108,12 @@ a {
   align-items: center;
 }
 
+@media (max-width: 640px) {
+  .prompt-line {
+    font-size: 1rem;
+  }
+}
+
 .prompt-line .p {
   color: var(--green);
 }
@@ -1106,6 +1139,14 @@ a {
   margin-top: 26px;
   color: var(--text-muted);
   font-size: 1.2rem;
+}
+
+@media (max-width: 640px) {
+  .hero-desc {
+    font-size: 1rem;
+    max-width: 100%;
+    margin-top: 18px;
+  }
 }
 
 .hero-desc b {
