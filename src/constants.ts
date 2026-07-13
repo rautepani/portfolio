@@ -36,7 +36,7 @@ export const ANIMATIONS = {
 export const SOCIAL_LINKS = {
   github: 'https://github.com/rautepani',
   linkedin: 'https://www.linkedin.com/in/biswash',
-  twitter: 'https://twitter.com',
+  discord: 'https://discord.com',
   email: 'biswashdevkota2024@gmail.com',
 };
 // Personal info

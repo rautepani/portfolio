@@ -20,6 +20,15 @@ export default function About() {
   const [historyIdx, setHistoryIdx] = useState(-1);
   const termBodyRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const measureRef = useRef<HTMLSpanElement>(null);
+  const [cursorLeft, setCursorLeft] = useState(0);
+  const [isFocused, setIsFocused] = useState(false);
+
+  useEffect(() => {
+    if (measureRef.current) {
+      setCursorLeft(measureRef.current.getBoundingClientRect().width);
+    }
+  }, [inputValue]);
 
   const commands: Record<string, string> = {
     help: 'Available commands: whoami, pwd, ls, ls interests/, sudo hire-me, clear',
@@ -163,14 +172,16 @@ export default function About() {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={handleKeyDown}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
                 autoComplete="off"
                 spellCheck={false}
-                placeholder="type a command..."
+                placeholder="type a command"
               />
-              <span className="term-measure mono">{inputValue}</span>
+              <span ref={measureRef} className="term-measure mono">{inputValue}</span>
               <span
                 className="term-block-cursor"
-                style={{ left: `${Math.min(300, inputValue.length * 8 + 4)}px` }}
+                style={{ left: `${cursorLeft}px` }}
               />
             </div>
           </form>
