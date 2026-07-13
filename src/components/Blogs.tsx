@@ -10,11 +10,11 @@ export default function Blogs() {
       <div className="sec-label">cat blogs/index.md</div>
       <h2 className="sec-title">06. Blogs</h2>
 
-      <div className="blog-list reveal">
+      <div className="blog-list blog-list-home reveal">
         {latest.map((post) => (
           <Link
             key={post.slug}
-            to={`/blog/${post.slug}`}
+            to={`/blogposts/${post.slug}`}
             className="blog-card"
           >
             <div className="blog-card-meta">
@@ -35,8 +35,8 @@ export default function Blogs() {
       </div>
 
       <div className="blog-viewall">
-        <Link to="/blog" className="blog-viewall-link">
-          <span className="blog-viewall-prompt">$</span> ls -la blogs/ --all
+        <Link to="/blogposts" className="blog-viewall-link">
+          <span className="blog-viewall-prompt">$</span> ls -la blogs/ -- More Posts
           <ArrowRight size={14} style={{ marginLeft: '8px', display: 'inline', verticalAlign: 'middle' }} />
         </Link>
       </div>

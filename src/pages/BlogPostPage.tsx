@@ -13,7 +13,7 @@ export default function BlogPostPage() {
     return (
       <div className="blog-page-root">
         <div className="blog-page-header">
-          <Link to="/blog" className="blog-back-link">
+          <Link to="/blogposts" className="blog-back-link">
             <ArrowLeft size={14} /> cd ~/blog
           </Link>
           <span className="blog-page-title">biswash@nityaniyam:~/blog/404</span>
@@ -24,7 +24,7 @@ export default function BlogPostPage() {
             <div style={{ marginTop: '12px' }}>
               <span style={{ color: 'var(--green)' }}>$</span>{' '}
               <button
-                onClick={() => navigate('/blog')}
+                onClick={() => navigate('/blogposts')}
                 style={{ background: 'none', border: 'none', color: 'var(--cyan)', cursor: 'pointer', fontFamily: 'var(--mono)', fontSize: '15px', textDecoration: 'underline dotted' }}
               >
                 cd ~/blog
@@ -40,7 +40,7 @@ export default function BlogPostPage() {
     <div className="blog-page-root">
       {/* Header bar */}
       <div className="blog-page-header">
-        <Link to="/blog" className="blog-back-link">
+        <Link to="/blogposts" className="blog-back-link">
           <ArrowLeft size={14} /> cd ~/blog
         </Link>
         <span className="blog-page-title">biswash@nityaniyam:~/blog/{post.slug}</span>

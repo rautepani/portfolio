@@ -155,6 +155,106 @@ Feature engineering matters more than model choice for this problem. The differe
 The full project is on [GitHub](https://github.com/rautepani/phishing-url-detector).
 `,
   },
+  {
+    slug: 'htb-cap-writeup',
+    title: 'HackTheBox Cap: Writeup',
+    date: '2026-07-10',
+    tags: ['htb', 'ctf', 'walkthrough', 'linux'],
+    excerpt:
+      'A walkthrough of HTB\'s Cap machine — from an IDOR in a packet-capture dashboard to a Linux capability misconfiguration for root.',
+    content: `# HackTheBox Cap: Writeup
+
+Cap is a beginner-friendly Linux box on HackTheBox that chains a classic web IDOR with a Linux capability misconfiguration to get root. It's a great box for learning how file permissions aren't the only privilege boundary on Linux — capabilities matter too.
+
+## Recon
+
+Start with a full port scan:
+
+\`\`\`bash
+nmap -sC -sV -p- <target-ip>
+\`\`\`
+
+This turns up the usual suspects for a Linux web box:
+
+| Port | Service |
+|---|---|
+| 21 | FTP |
+| 22 | SSH |
+| 80 | HTTP |
+
+The web server hosts a small dashboard-style application that lets you trigger and download network packet captures — a nice hint about where the vulnerability lives.
+
+## Finding the IDOR
+
+The app exposes an endpoint that serves a capture file by an incrementing numeric ID, something like:
+
+\`\`\`
+/data/1
+/data/2
+/data/0
+\`\`\`
+
+Each ID returns a different \`.pcap\` file. Since there's no access control tying the requesting session to the ID, you can simply walk the IDs backward and pull captures that belong to other actions taken on the box — including ones triggered by an admin session. This is a textbook **Insecure Direct Object Reference (IDOR)**: the app trusts a client-supplied identifier without checking whether the current user is allowed to see that resource.
+
+## Extracting Credentials from the Capture
+
+Once you have a promising \`.pcap\`, open it in Wireshark or filter it on the command line:
+
+\`\`\`bash
+tshark -r 0.pcap -Y ftp
+\`\`\`
+
+Buried in the FTP control-channel traffic is a plaintext username and password — FTP doesn't encrypt credentials by default, so anything captured on that channel is trivially readable. These same credentials turn out to be reused for SSH, which is the actual way onto the box.
+
+## Initial Foothold
+
+\`\`\`bash
+ssh <recovered-user>@<target-ip>
+\`\`\`
+
+That's the user flag secured. From here the interesting part starts: privilege escalation.
+
+## Privilege Escalation: Linux Capabilities
+
+Most people check SUID binaries first:
+
+\`\`\`bash
+find / -perm -4000 -type f 2>/dev/null
+\`\`\`
+
+But on Cap, the escalation path isn't a SUID bit — it's a **Linux capability** granted directly to a binary. Capabilities let a program get one specific piece of root's power (like binding to low ports, or raw socket access) without being fully setuid-root. Check for them with:
+
+\`\`\`bash
+getcap -r / 2>/dev/null
+\`\`\`
+
+A Python interpreter shows up with a capability that effectively lets it set its own UID. That's enough. From inside Python:
+
+\`\`\`python
+import os
+os.setuid(0)
+os.system('/bin/bash')
+\`\`\`
+
+Because the interpreter itself was granted the capability, calling \`setuid(0)\` from within it succeeds even though you're not root yet — and you land in a root shell.
+
+## Root Flag
+
+\`\`\`bash
+cat /root/root.txt
+\`\`\`
+
+## Key Takeaways
+
+- **IDORs aren't just a web-app footnote.** Any endpoint that takes a numeric or predictable ID needs an authorization check, not just an authentication check.
+- **Unencrypted protocols leak credentials to anyone who can capture traffic**, even on boxes that otherwise look hardened.
+- **\`find -perm -4000\` isn't a complete privesc checklist.** Always check \`getcap -r /\` too — capabilities are a separate, easy-to-forget privilege model on modern Linux.
+
+---
+
+*Part of an ongoing series working through HackTheBox machines. Writeups like this are as much about the "why it works" as the exact commands — understanding the underlying primitive (IDOR, capability misuse) is what transfers to the next box.*
+`,
+  },
 ];
 
 export function getLatestPosts(n = 3): Post[] {

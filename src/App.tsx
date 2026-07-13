@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Navigation from './components/Navigation.tsx';
 import Hero from './components/Hero.tsx';
 import About from './components/About.tsx';
@@ -9,6 +10,8 @@ import Certificates from './components/Certificates.tsx';
 import Blogs from './components/Blogs.tsx';
 import Contact from './components/Contact.tsx';
 import Footer from './components/Footer.tsx';
+import BlogPage from './pages/BlogPage.tsx';
+import BlogPostPage from './pages/BlogPostPage.tsx';
 
 type Theme = 'dark' | 'light' | 'amber';
 type BootState = 'booting' | 'collapsing' | 'ready';
@@ -25,6 +28,8 @@ const commands = [
 ];
 
 function App() {
+  const location = useLocation();
+  const isBlogRoute = location.pathname.startsWith('/blogposts');
   const [activeSection, setActiveSection] = useState('hero-top');
   const [theme, setTheme] = useState<Theme>('dark');
   const [cmdkOpen, setCmdkOpen] = useState(false);
@@ -95,23 +100,34 @@ function App() {
   }, [bootState]); // Re-observe when DOM elements mount/unmount after boot completes
 
   // Scroll Reveal Observer
+  // Re-runs on bootState (first load) AND on location.pathname (e.g. navigating
+  // back from /blogposts to /), since React Router unmounts/remounts the whole
+  // <main> tree on route change, producing fresh .reveal elements that a
+  // one-time observer would never see.
   useEffect(() => {
-    if (bootState !== 'ready') return;
-    const revealEls = document.querySelectorAll('.reveal');
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in');
-            io.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
-    revealEls.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, [bootState]);
+    if (bootState !== 'ready' || isBlogRoute) return;
+
+    // Wait a tick so the freshly-mounted DOM (after a route change) is in place
+    const raf = requestAnimationFrame(() => {
+      const revealEls = document.querySelectorAll('.reveal');
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+      revealEls.forEach((el) => io.observe(el));
+      (window as unknown as { __revealIO?: IntersectionObserver }).__revealIO?.disconnect();
+      (window as unknown as { __revealIO?: IntersectionObserver }).__revealIO = io;
+    });
+
+    return () => cancelAnimationFrame(raf);
+  }, [bootState, location.pathname, isBlogRoute]);
 
   // Custom Cursor & Progress Bar
   useEffect(() => {
@@ -299,19 +315,23 @@ function App() {
       <div className="mouse-glow-global" ref={glowRef} />
 
       {/* Brand Pill */}
-      <a className="brand-pill" href="#hero-top">
-        <span className="path-prefix">./</span>nityaniyam
-      </a>
+      {!isBlogRoute && (
+        <a className="brand-pill" href="#hero-top">
+          <span className="path-prefix">./</span>nityaniyam
+        </a>
+      )}
 
       {/* Floating Navigation Dock */}
-      <Navigation
-        activeSection={activeSection}
-        theme={theme}
-        onThemeToggle={cycleTheme}
-      />
+      {!isBlogRoute && (
+        <Navigation
+          activeSection={activeSection}
+          theme={theme}
+          onThemeToggle={cycleTheme}
+        />
+      )}
 
       {/* Command Palette Modal */}
-      {cmdkOpen && (
+      {!isBlogRoute && cmdkOpen && (
         <div
           className="cmdk-overlay open"
           onClick={(e) => {
@@ -357,46 +377,66 @@ function App() {
         </div>
       )}
 
+      {/* Theme toggle stays available on blog routes too, since Navigation is hidden there */}
+      {isBlogRoute && (
+        <button
+          className="theme-toggle"
+          aria-label="Cycle theme"
+          onClick={cycleTheme}
+        >
+          {theme === 'dark' ? '●' : theme === 'light' ? '○' : '◒'}
+        </button>
+      )}
+
       {/* Main Page Layout */}
-      <main>
-        <div id="hero-top" ref={registerSection('hero-top')}>
-          <Hero bootState={bootState} setBootState={setBootState} />
-        </div>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <main>
+              <div id="hero-top" ref={registerSection('hero-top')}>
+                <Hero bootState={bootState} setBootState={setBootState} />
+              </div>
 
-        {bootState === 'ready' && (
-          <>
-            <div id="about" ref={registerSection('about')}>
-              <About />
-            </div>
-            
-            <div id="skills" ref={registerSection('skills')}>
-              <Skills />
-            </div>
+              {bootState === 'ready' && (
+                <>
+                  <div id="about" ref={registerSection('about')}>
+                    <About />
+                  </div>
 
-            <div id="projects" ref={registerSection('projects')}>
-              <Projects />
-            </div>
+                  <div id="skills" ref={registerSection('skills')}>
+                    <Skills />
+                  </div>
 
-            <div id="education" ref={registerSection('education')}>
-              <Education />
-            </div>
+                  <div id="projects" ref={registerSection('projects')}>
+                    <Projects />
+                  </div>
 
-            <div id="certificates" ref={registerSection('certificates')}>
-              <Certificates />
-            </div>
+                  <div id="education" ref={registerSection('education')}>
+                    <Education />
+                  </div>
 
-            <div id="blogs" ref={registerSection('blogs')}>
-              <Blogs />
-            </div>
-            
-            <div id="contact" ref={registerSection('contact')}>
-              <Contact />
-            </div>
-          </>
-        )}
-      </main>
+                  <div id="certificates" ref={registerSection('certificates')}>
+                    <Certificates />
+                  </div>
 
-      <Footer />
+                  <div id="blogs" ref={registerSection('blogs')}>
+                    <Blogs />
+                  </div>
+
+                  <div id="contact" ref={registerSection('contact')}>
+                    <Contact />
+                  </div>
+                </>
+              )}
+            </main>
+          }
+        />
+        <Route path="/blogposts" element={<BlogPage />} />
+        <Route path="/blogposts/:slug" element={<BlogPostPage />} />
+      </Routes>
+
+      {!isBlogRoute && <Footer />}
     </div>
   );
 }

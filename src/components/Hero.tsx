@@ -40,6 +40,16 @@ export default function Hero({ bootState, setBootState }: HeroProps) {
 
   // Boot sequence logic
   useEffect(() => {
+    // If we're remounting after the boot animation already completed once
+    // this session (e.g. navigating back from /blogposts to /), skip the
+    // typing animation entirely and show the content immediately — there's
+    // no "booting" DOM node to attach to at this point anyway.
+    if (bootState === 'ready') {
+      setHeroContentIn(true);
+      setTypewriterText(greetings[0]);
+      return;
+    }
+
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduced) {
       setBootState('ready');

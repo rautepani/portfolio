@@ -59,7 +59,7 @@ export default function BlogPage() {
           {sorted.map((post) => (
             <Link
               key={post.slug}
-              to={`/blog/${post.slug}`}
+              to={`/blogposts/${post.slug}`}
               className="blog-card"
             >
               <div className="blog-card-meta">
