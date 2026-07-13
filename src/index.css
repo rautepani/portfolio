@@ -266,6 +266,22 @@ a {
   box-shadow: 0 10px 34px rgba(0, 0, 0, 0.4), 0 1px 0 rgba(255, 255, 255, 0.03) inset;
 }
 
+@media (max-width: 900px) {
+  .titlebar {
+    left: auto;
+    right: 68px;
+    transform: none;
+    max-width: none;
+    padding: 8px 10px;
+  }
+}
+
+@media (max-width: 640px) {
+  .titlebar {
+    right: 60px;
+  }
+}
+
 .pill-tabs {
   display: flex;
   align-items: center;
@@ -1522,11 +1538,18 @@ section {
 
 @media (max-width: 640px) {
   .pkg-row {
-    grid-template-columns: 16px 1fr 74px;
+    grid-template-columns: 16px 1fr auto;
+    gap: 10px;
   }
 
   .pkg-row .ver {
     display: none;
+  }
+
+  .pkg-row .status {
+    font-size: 12px;
+    padding: 3px 6px;
+    white-space: nowrap;
   }
 }
 
