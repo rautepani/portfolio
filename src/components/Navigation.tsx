@@ -64,7 +64,7 @@ export default function Navigation({
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen((o) => !o)}
           >
-            {mobileOpen ? <X size={16} /> : <Menu size={16} />}
+            {mobileOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
        </header>
 
