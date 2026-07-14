@@ -40,6 +40,49 @@ function App() {
   const sectionsRef = useRef<{ [key: string]: HTMLElement | null }>({});
   const cmdkInputRef = useRef<HTMLInputElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
+  const pathnameRef = useRef(location.pathname);
+  const prevPathRef = useRef(location.pathname);
+
+  // Take manual control of scroll position on route changes — the browser's
+  // built-in scroll restoration doesn't play well with a single-page-scroll
+  // home route sitting next to separate blog routes, and ends up dropping
+  // you at whatever scroll offset happens to be available at that instant
+  // (which is why "back" could land you in the middle of a random section).
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+  }, []);
+
+  useEffect(() => {
+    pathnameRef.current = location.pathname;
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const prevPath = prevPathRef.current;
+    const goingToBlog = location.pathname.startsWith('/blogposts');
+    const cameFromBlog = prevPath.startsWith('/blogposts') && location.pathname === '/';
+
+    if (goingToBlog) {
+      // Entering a blog route (list or post) should always start at the top,
+      // not wherever the home page happened to be scrolled to.
+      window.scrollTo(0, 0);
+    } else if (cameFromBlog) {
+      // Coming back to the home route from a blog route — restore the exact
+      // scroll position the person was at before they navigated away.
+      const saved = sessionStorage.getItem('home-scrollY');
+      if (saved) {
+        const y = parseInt(saved, 10);
+        // Wait two frames so the freshly-mounted <main> has its full height
+        // before we scroll, otherwise the browser clamps to a smaller max.
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => window.scrollTo(0, y));
+        });
+      }
+    }
+
+    prevPathRef.current = location.pathname;
+  }, [location.pathname]);
 
   // Theme Toggler
   const cycleTheme = () => {
@@ -79,7 +122,13 @@ function App() {
   }, []);
 
   // Intersection Observer for Active Section
+  // Also re-runs on location.pathname: returning from a /blogposts route to
+  // "/" remounts <main> with brand-new section elements, and an observer
+  // built only once (on bootState) would keep watching the old, now-detached
+  // nodes forever, silently breaking nav highlighting after every round trip.
   useEffect(() => {
+    if (isBlogRoute) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -97,7 +146,7 @@ function App() {
     });
 
     return () => observer.disconnect();
-  }, [bootState]); // Re-observe when DOM elements mount/unmount after boot completes
+  }, [bootState, location.pathname, isBlogRoute]);
 
   // Scroll Reveal Observer
   // Re-runs on bootState (first load) AND on location.pathname (e.g. navigating
@@ -137,10 +186,17 @@ function App() {
     // Progress Bar scroll listener
     const handleScroll = () => {
       const progressBar = document.getElementById('progressBar');
-      if (!progressBar) return;
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      progressBar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
+      if (progressBar) {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        progressBar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
+      }
+      // Continuously remember scroll position while on the home route, so we
+      // can restore it correctly if the person navigates to a blog page and
+      // then comes back (see the scroll-restoration effect above).
+      if (pathnameRef.current === '/') {
+        sessionStorage.setItem('home-scrollY', String(window.scrollY));
+      }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();

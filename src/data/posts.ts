@@ -266,3 +266,8 @@ export function getLatestPosts(n = 3): Post[] {
 export function getPostBySlug(slug: string): Post | undefined {
   return posts.find((p) => p.slug === slug);
 }
+
+export function getReadTime(content: string): number {
+  const words = content.trim().split(/\s+/).length;
+  return Math.max(1, Math.round(words / 200));
+}

@@ -38,14 +38,6 @@ export default function BlogPostPage() {
 
   return (
     <div className="blog-page-root">
-      {/* Header bar */}
-      <div className="blog-page-header">
-        <Link to="/blogposts" className="blog-back-link">
-          <ArrowLeft size={14} /> cd ~/blog
-        </Link>
-        <span className="blog-page-title">biswash@nityaniyam:~/blog/{post.slug}</span>
-      </div>
-
       <main className="blog-page-main blog-post-main">
         {/* Post header */}
         <div className="blog-post-header">
