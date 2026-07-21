@@ -22,7 +22,7 @@ export default function About() {
   const inputRef = useRef<HTMLInputElement>(null);
   const measureRef = useRef<HTMLSpanElement>(null);
   const [cursorLeft, setCursorLeft] = useState(0);
-  const [isFocused, setIsFocused] = useState(false);
+  const [, setIsFocused] = useState(false);
 
   useEffect(() => {
     if (measureRef.current) {
