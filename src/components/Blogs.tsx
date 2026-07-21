@@ -35,9 +35,8 @@ export default function Blogs() {
       </div>
 
       <div className="blog-viewall">
-        <Link to="/blogposts" className="blog-viewall-link">
-          <span className="blog-viewall-prompt">$</span> ls -la blogs/ -- More Posts
-          <ArrowRight size={14} style={{ marginLeft: '8px', display: 'inline', verticalAlign: 'middle' }} />
+        <Link to="/blogposts" className="btn-ghost" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+          More Posts <ArrowRight size={14} />
         </Link>
       </div>
     </section>
