@@ -1,18 +1,10 @@
 import {
-  Shield,
-  Search,
-  Globe,
-  Database,
   Terminal,
-  Layers,
-  Network,
   Clock,
   Users,
   FileText,
   Edit3,
-  Cloud,
 } from 'lucide-react';
-
 
 // Helper to construct a custom colored SVG from Simple Icons CDN
 const SimpleIcon = ({ slug, color }: { slug: string; color: string }) => {
@@ -33,46 +25,18 @@ const groups = [
     tools: [
       { icon: <SimpleIcon slug="python" color="3776AB" />, label: 'Python' },
       { icon: <SimpleIcon slug="javascript" color="F7DF1E" />, label: 'JavaScript' },
-      { icon: <SimpleIcon slug="rust" color="CE412B" />, label: 'Rust' },
       { icon: <Terminal className="text-green-500" size={18} />, label: 'Bash' },
-    ],
-  },
-  {
-    title: 'Security & Testing',
-    tools: [
-      { icon: <Search className="text-cyan-500" size={18} />, label: 'nmap' },
-      { icon: <SimpleIcon slug="wireshark" color="1679A7" />, label: 'Wireshark' },
-      { icon: <Shield className="text-red-500" size={18} />, label: 'Burp Suite' },
-      { icon: <Database className="text-green-500" size={18} />, label: 'API Testing' },
-    ],
-  },
-  {
-    title: 'Cloud & Data',
-    tools: [
-      { icon: <Cloud className="text-orange-500" size={18} />, label: 'AWS EC2' },
-      { icon: <Cloud className="text-cyan-500" size={18} />, label: 'AWS S3' },
-      { icon: <SimpleIcon slug="postgresql" color="4169E1" />, label: 'PostgreSQL' },
-    ],
-  },
-  {
-    title: 'Machine Learning',
-    tools: [
-      { icon: <SimpleIcon slug="pandas" color="150458" />, label: 'Pandas' },
-      { icon: <SimpleIcon slug="numpy" color="013243" />, label: 'NumPy' },
-      { icon: <SimpleIcon slug="tensorflow" color="FF6F00" />, label: 'TensorFlow' },
       { icon: <SimpleIcon slug="scikitlearn" color="F7931E" />, label: 'Scikit-learn' },
+      { icon: <SimpleIcon slug="pandas" color="150458" />, label: 'Pandas' },
     ],
   },
   {
-    title: 'Tools & Infra',
+    title: 'Cloud & Infra',
     tools: [
       { icon: <SimpleIcon slug="linux" color="FCC624" />, label: 'Linux' },
-      { icon: <SimpleIcon slug="git" color="F05032" />, label: 'Git' },
-      { icon: <Layers className="text-blue-400" size={18} />, label: 'Virtualization' },
       { icon: <SimpleIcon slug="docker" color="2496ED" />, label: 'Docker' },
-      { icon: <SimpleIcon slug="kubernetes" color="326CE5" />, label: 'Kubernetes' },
-      { icon: <Globe className="text-green-600" size={18} />, label: 'CI/CD' },
-      { icon: <Network className="text-teal-500" size={18} />, label: 'Packet Tracer' },
+      { icon: <SimpleIcon slug="git" color="F05032" />, label: 'Git' },
+      { icon: <SimpleIcon slug="postgresql" color="4169E1" />, label: 'PostgreSQL' },
     ],
   },
 ];

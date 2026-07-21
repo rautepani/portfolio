@@ -1507,82 +1507,112 @@ section {
   white-space: nowrap;
 }
 
-/* ===== skills as package list ===== */
-.pkg-list {
+/* ===== certificates card grid ===== */
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.cert-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 6px;
-  font-family: var(--mono);
-  font-size: 15px;
-  overflow: hidden;
+  border-radius: 8px;
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.25s ease;
+  position: relative;
 }
 
-.pkg-row {
-  display: grid;
-  grid-template-columns: 20px 1fr 100px 90px;
+.cert-card:hover {
+  border-color: var(--green);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25), 0 0 15px rgba(67, 216, 138, 0.1);
+}
+
+.cert-card-header {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 14px;
-  padding: 13px 20px;
-  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
 }
 
-.pkg-row:last-child {
-  border-bottom: none;
+.cert-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: rgba(67, 216, 138, 0.08);
+  border: 1px solid var(--green-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.pkg-row .dot2 {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--green);
+.cert-award-icon {
+  color: var(--green);
 }
 
-.pkg-row.learning .dot2 {
-  background: var(--amber);
-}
-
-.pkg-row .name {
-  color: var(--text);
-}
-
-.pkg-row .ver {
-  color: var(--text-dim);
-}
-
-.pkg-row .status {
-  font-size: 14px;
-  padding: 3px 8px;
-  border-radius: 3px;
-  text-align: center;
-}
-
-.status.installed {
+.cert-status-tag {
+  font-family: var(--mono);
+  font-size: 12px;
   color: var(--green);
   background: rgba(67, 216, 138, 0.08);
   border: 1px solid var(--green-dim);
+  padding: 3px 9px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-transform: lowercase;
 }
 
-.status.learning {
-  color: var(--amber);
-  background: var(--amber-glow);
-  border: 1px solid var(--amber-border);
+.cert-card-body {
+  margin-bottom: 20px;
+  flex-grow: 1;
 }
 
-@media (max-width: 640px) {
-  .pkg-row {
-    grid-template-columns: 16px 1fr auto;
-    gap: 10px;
-  }
+.cert-title {
+  font-family: var(--mono);
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--text-strong);
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
 
-  .pkg-row .ver {
-    display: none;
-  }
+.cert-issuer {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
 
-  .pkg-row .status {
-    font-size: 12px;
-    padding: 3px 6px;
-    white-space: nowrap;
-  }
+.cert-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+.cert-date {
+  color: var(--text-dim);
+}
+
+.cert-verify-link {
+  color: var(--cyan);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.2s ease;
+  border-bottom: 1px dotted var(--cyan);
+}
+
+.cert-verify-link:hover {
+  color: var(--green);
+  border-color: var(--green);
 }
 
 .cat-tag {
@@ -1604,43 +1634,64 @@ section {
   background: var(--border);
 }
 
-/* ===== projects ===== */
-.proj-list {
+/* ===== projects cards grid ===== */
+.proj-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.proj-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  overflow: hidden;
+  justify-content: space-between;
+  transition: all 0.25s ease;
 }
 
-.proj-row {
-  padding: 22px 24px;
-  border-bottom: 1px solid var(--border);
-  cursor: pointer;
-  transition: background .2s;
-  background: var(--bg-card);
+.proj-card:hover {
+  border-color: var(--green);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25), 0 0 15px rgba(67, 216, 138, 0.1);
 }
 
-.proj-row:last-child {
-  border-bottom: none;
-}
-
-.proj-row:hover {
-  background: var(--row-hover);
-}
-
-.proj-top {
+.proj-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.proj-card-folder {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--green);
+}
+
+.proj-card-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.proj-card-links a {
+  color: var(--text-muted);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.proj-card-links a:hover {
+  color: var(--green);
+  transform: translateY(-1px);
 }
 
 .proj-name {
   font-family: var(--mono);
   font-weight: 700;
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   color: var(--text-strong);
 }
 
@@ -1649,68 +1700,27 @@ section {
   font-weight: 500;
 }
 
-.sev {
-  font-family: var(--mono);
-  font-size: 13px;
-  padding: 3px 9px;
-  border-radius: 3px;
-  letter-spacing: .05em;
-}
-
-.sev.core {
-  color: var(--green);
-  border: 1px solid var(--green-dim);
-}
-
-.sev.security {
-  color: var(--red);
-  border: 1px solid rgba(239, 91, 91, 0.4);
-}
-
-.sev.tool {
-  color: var(--cyan);
-  border: 1px solid rgba(95, 208, 201, 0.4);
-}
-
-.proj-desc {
+.proj-card-desc {
   color: var(--text-muted);
-  font-size: 1.1rem;
-  margin-top: 12px;
-  max-width: 640px;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  margin-bottom: 20px;
+  flex-grow: 1;
 }
 
-.proj-stack {
+.proj-card-stack {
   display: flex;
   gap: 8px;
-  margin-top: 14px;
   flex-wrap: wrap;
 }
 
 .stack-pill {
   font-family: var(--mono);
-  font-size: 14px;
+  font-size: 13px;
   color: var(--text-dim);
   border: 1px solid var(--border-bright);
-  padding: 4px 11px;
+  padding: 3px 10px;
   border-radius: 20px;
-}
-
-.proj-links {
-  margin-top: 16px;
-  display: flex;
-  gap: 18px;
-  font-family: var(--mono);
-  font-size: 14px;
-}
-
-.proj-links a {
-  color: var(--text-muted);
-  border-bottom: 1px dotted var(--text-dim);
-}
-
-.proj-links a:hover {
-  color: var(--green);
-  border-color: var(--green);
 }
 
 /* ===== education as git log ===== */
@@ -2212,25 +2222,35 @@ section {
 }
 
 .blog-viewall {
-  margin-top: 30px;
+  margin-top: 36px;
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 24px;
-  flex-wrap: wrap;
+  width: 100%;
 }
 
-.blog-viewall-link {
+.blog-more-btn {
   font-family: var(--mono);
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid var(--border-bright);
   color: var(--text-muted);
+  padding: 12px 28px;
+  border-radius: 9999px;
+  transition: all .2s ease;
+  cursor: pointer;
+  background: transparent;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  transition: color .2s;
+  gap: 8px;
+  text-decoration: none;
 }
 
-.blog-viewall-link:hover {
+.blog-more-btn:hover {
+  border-color: var(--green);
   color: var(--green);
+  box-shadow: 0 0 15px rgba(67, 216, 138, 0.15);
+  transform: translateY(-2px);
 }
 
 .blog-viewall-secondary {

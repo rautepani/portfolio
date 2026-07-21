@@ -35,7 +35,7 @@ export default function Blogs() {
       </div>
 
       <div className="blog-viewall">
-        <Link to="/blogposts" className="btn-ghost" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+        <Link to="/blogposts" className="blog-more-btn">
           More Posts <ArrowRight size={14} />
         </Link>
       </div>

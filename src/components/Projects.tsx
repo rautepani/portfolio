@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Github, ExternalLink, BookOpen } from 'lucide-react';
+import { Github, ExternalLink, BookOpen, Folder } from 'lucide-react';
 
 interface Project {
   name: string;
@@ -45,63 +44,53 @@ const projects: Project[] = [
 ];
 
 export default function Projects() {
-  const [openRows, setOpenRows] = useState<Record<string, boolean>>({});
-
-  const toggleRow = (name: string) => {
-    setOpenRows((prev) => ({
-      ...prev,
-      [name]: !prev[name],
-    }));
-  };
-
   return (
     <section id="projects">
       <div className="sec-label">ls -la ~/projects</div>
       <h2 className="sec-title">03. Projects</h2>
 
-      <div className="proj-list reveal">
-        {projects.map((proj) => {
-          const isOpen = !!openRows[proj.name];
-          return (
-            <div
-              key={proj.name}
-              className={`proj-row ${isOpen ? 'open' : ''}`}
-              onClick={() => toggleRow(proj.name)}
-            >
-              <div className="proj-top">
-                <div className="proj-name">
+      <div className="proj-grid reveal">
+        {projects.map((proj) => (
+          <div key={proj.name} className="proj-card">
+            <div className="proj-card-header">
+              <div className="proj-card-folder">
+                <Folder size={18} />
+                <span className="proj-name">
                   <span className="path-pre">~/</span>
                   {proj.name}
-                </div>
+                </span>
               </div>
-              <p className="proj-desc">{proj.desc}</p>
-              <div className="proj-stack">
-                {proj.stack.map((s) => (
-                  <span key={s} className="stack-pill">
-                    {s}
-                  </span>
-                ))}
-              </div>
-              <div className="proj-links" onClick={(e) => e.stopPropagation()}>
+
+              <div className="proj-card-links">
                 {proj.sourceUrl && (
-                  <a href={proj.sourceUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                    <Github size={13} /> source
+                  <a href={proj.sourceUrl} target="_blank" rel="noopener noreferrer" title="View Source">
+                    <Github size={16} />
                   </a>
                 )}
                 {proj.liveUrl && (
-                  <a href={proj.liveUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                    <ExternalLink size={13} /> live
+                  <a href={proj.liveUrl} target="_blank" rel="noopener noreferrer" title="Live Preview">
+                    <ExternalLink size={16} />
                   </a>
                 )}
                 {proj.writeupUrl && (
-                  <a href={proj.writeupUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                    <BookOpen size={13} /> write-up
+                  <a href={proj.writeupUrl} target="_blank" rel="noopener noreferrer" title="Read Writeup">
+                    <BookOpen size={16} />
                   </a>
                 )}
               </div>
             </div>
-          );
-        })}
+
+            <p className="proj-card-desc">{proj.desc}</p>
+
+            <div className="proj-card-stack">
+              {proj.stack.map((s) => (
+                <span key={s} className="stack-pill">
+                  {s}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );
